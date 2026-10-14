@@ -1,0 +1,12 @@
+manifest_schema_version = "1.3"
+
+[plugin]
+name = "cr_heavy"
+version = "1.0.0"
+description = "Test plugin: heavy python dependencies (torch)."
+triggers = ["process_scheduled_call"]
+repository = "https://github.com/caterryan/influxdb3-plugins-registry-test"
+
+[dependencies]
+database_version = ">=3.0.0"
+python = ["torch", "numpy"]

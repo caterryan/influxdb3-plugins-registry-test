@@ -1,0 +1,11 @@
+manifest_schema_version = "1.3"
+
+[plugin]
+name = "cr_writes"
+version = "1.0.0"
+description = "Test plugin: writes marker rows on WAL writes."
+triggers = ["process_writes"]
+repository = "https://github.com/caterryan/influxdb3-plugins-registry-test"
+
+[dependencies]
+database_version = ">=3.0.0"

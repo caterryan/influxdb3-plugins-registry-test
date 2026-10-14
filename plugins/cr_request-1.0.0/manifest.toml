@@ -1,0 +1,12 @@
+manifest_schema_version = "1.3"
+
+[plugin]
+name = "cr_request"
+version = "1.0.0"
+description = "Test plugin: HTTP request handler returning marker and humanize version."
+triggers = ["process_request"]
+repository = "https://github.com/caterryan/influxdb3-plugins-registry-test"
+
+[dependencies]
+database_version = ">=3.0.0"
+python = ["humanize>=4"]

@@ -1,0 +1,65 @@
+# Downsampling Plugin Scheduler Configuration Template
+# Copy this file to your PLUGIN_DIR and reference it with `--trigger-arguments config_file_path=downsampling_config_scheduler.toml`
+
+########## Required Parameters ##########
+# Name of the source measurement to downsample
+# Specify the measurement name (string) from your source InfluxDB database
+source_measurement = "your_source_measurement"  # e.g., "cpu_usage", "temperature", "home"
+
+# Name of the target measurement to write downsampled data
+# Specify the target measurement name (string)
+target_measurement = "your_target_measurement"  # e.g., "downsampled_cpu", "processed_temperature"
+
+# Time interval for aggregation
+# Format: <number><unit>, where unit is s (seconds), min (minutes), h (hours), d (days), w (weeks), m (months), q (quarters), y (years)
+interval = "your_interval"  # e.g., "10s", "1h", "1d"
+
+# Time window for each downsampling job
+# Format: <number><unit>, where unit is s (seconds), min (minutes), h (hours), d (days), w (weeks)
+window = "your_window"  # e.g., "30min", "24h"
+
+
+########## Optional Parameters ##########
+# Time offset to shift the window
+# Format: <number><unit>, where unit is s (seconds), min (minutes), h (hours), d (days), w (weeks)
+#offset = "your_offset"  # e.g., "10s", "1h"
+
+# Specific fields to downsample
+# List of strings representing field names to include; leave empty to downsample all fields
+#specific_fields = ["field1", "field2"]  # e.g., ["temp", "hum"]
+
+# Fields and tags to exclude from downsampling results
+# List of strings representing field and tag names to exclude; leave commented or empty to include all fields and tags
+#excluded_fields = ["field3", "field4", "tag1"]  # e.g., ["co", "hum2", "location"]
+
+# Maximum number of retries for write operations
+# Integer value ≥ 0; default is typically 5
+#max_retries = 5  # e.g., 3, 10
+
+# Full exception logging
+# When true, full exception messages are logged. When false (default), only the
+# exception type is logged, to avoid leaking sensitive values into log output.
+#enable_full_logging = false
+
+# Target database for writing downsampled data
+# Specify the target database name (string); if omitted, source database is used
+#target_database = "your_target_database"  # e.g., "analytics_db", "downsampled_data"
+
+# Aggregation functions per field
+# Either a single function (string, e.g., "avg") or a list of [field, function] pairs
+# Supported functions: "avg", "sum", "min", "max", "median", "count", "stddev", "first_value", "last_value", "var", "approx_median"
+#calculations = "avg"  # Single function applied to all fields
+#calculations = [["field1", "function1"], ["field2", "function2"]]  # e.g., [["temp", "avg"], ["hum", "max"]]
+
+# Tag filters
+# Map of tag keys to lists of allowed tag values (strings)
+#[tag_values]
+#tag_key = ["value1", "value2"]  # e.g., room = ["Kitchen", "LivingRoom"]
+
+###### Example: Create Trigger Using This Config ######
+# influxdb3 create trigger \
+#   --database your_database_name \
+#   --plugin-filename downsampler.py \
+#   --trigger-spec "every:your_interval" \
+#   --trigger-arguments config_file_path=downsampling_config_scheduler.toml \
+#   your_trigger_name
